@@ -1,40 +1,39 @@
 package main
 
 import (
+	"container/ring"
 	_ "embed"
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
-	"container/ring"
 )
 
 //go:embed input.txt
 var input string
-
 
 func getSolutionPart1(input string) int {
 	result := 0
 
 	r := ring.New(100)
 	n := r.Len()
-	for i := 0; i < n; i++ {
+	for i := range n {
 		r.Value = i
 		r = r.Next()
 	}
 	r = r.Move(50)
-	rows := strings.Split(input, "\n")
-	for _, row := range rows {
+	rows := strings.SplitSeq(input, "\n")
+	for row := range rows {
 		if len(row) == 0 {
 			break
 		}
 		direction := row[0:1]
-		if steps, err := strconv.Atoi(row[1:len(row)]); err == nil {
+		if steps, err := strconv.Atoi(row[1:]); err == nil {
 			if direction == "L" {
 				steps = steps * -1
 			}
 			r = r.Move(steps)
-			if(r.Value == 0) {
+			if r.Value == 0 {
 				result++
 			}
 		}
@@ -44,10 +43,10 @@ func getSolutionPart1(input string) int {
 
 func getSolutionPart2(input string) int {
 	result := 0
-	
+
 	r := ring.New(100)
 	n := r.Len()
-	for i := 0; i < n; i++ {
+	for i := range n {
 		r.Value = i
 		r = r.Next()
 	}
@@ -59,18 +58,18 @@ func getSolutionPart2(input string) int {
 			break
 		}
 		direction := row[0:1]
-		stringSteps :=  row[1:len(row)]
+		stringSteps := row[1:]
 		multiple := 0
 		if len(stringSteps) >= 3 {
 			multiple, _ = strconv.Atoi(stringSteps[0:1])
-			stringSteps = stringSteps[1:len(stringSteps)]
+			stringSteps = stringSteps[1:]
 		}
 		if steps, err := strconv.Atoi(stringSteps); err == nil {
 			result += multiple
 			if direction == "L" {
 				steps = steps * -1
 			}
-			
+
 			r = r.Move(steps)
 
 			if r.Value == 0 {
@@ -86,7 +85,6 @@ func getSolutionPart2(input string) int {
 	}
 
 	return result
-	
 }
 
 func main() {
