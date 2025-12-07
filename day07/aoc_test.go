@@ -12,7 +12,7 @@ import (
 var testinput string
 
 func TestAOC_getSolutionPart1(t *testing.T) {
-	var expectedSolution int64 = 3
+	var expectedSolution int64 = 21
 	actualSolution := getSolutionPart1(testinput)
 	assert.Equal(t, expectedSolution, actualSolution)
 }
