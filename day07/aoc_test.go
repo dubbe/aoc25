@@ -18,7 +18,7 @@ func TestAOC_getSolutionPart1(t *testing.T) {
 }
 
 func TestAOC_getSolutionPart2(t *testing.T) {
-	expectedSolution := 6
+	var expectedSolution int64 = 40
 	actualSolution := getSolutionPart2(testinput)
 	assert.Equal(t, expectedSolution, actualSolution)
 }
